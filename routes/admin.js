@@ -3,29 +3,18 @@ const path = require("path");
 const express = require("express");
 
 const rootDir = require("../util/path.js");
+const productsController = require('../controller/products.js');
+const contactUsController = require('../controller/contactUs.js');
+const successController = require('../controller/success.js');
 
 const router = express.Router();
 
-router.get('/add-product', (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'addProduct.html'));
-});
+router.get('/add-product', productsController.getAddProduct);
 
-router.post('/add-product', (req, res, next) => {
-    //console.log(req.body);  //print the object as it is 
-    const body = req.body;
-    for (let key in body) {   //printing the object properties separately
-        console.log(key + ":", body[key]);
-    }
+router.post('/add-product', productsController.postAddProduct);
 
-    res.redirect('/');
-});
+router.get('/contact-us', contactUsController.contactUs);
 
-router.get('/contact-us', (req, res, next) => {
-    res.sendFile(path.join(rootDir, "views", "contactUs.html"));
-});
-
-router.post('/success', (req, res, next)=>{
-    res.sendFile(path.join(rootDir, 'views', 'submitQuery.html'));
-});
+router.post('/success', successController.success);
 
 module.exports = router;
